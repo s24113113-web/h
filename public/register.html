@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>註冊</title>
+</head>
+<body>
+
+  <h2>註冊</h2>
+
+  <input id="username" placeholder="帳號"><br><br>
+  <input id="password" type="password" placeholder="密碼"><br><br>
+
+  <button onclick="register()">註冊</button>
+
+  <p id="msg"></p>
+
+  <script>
+    async function register() {
+      const res = await fetch("/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          username: document.getElementById("username").value,
+          password: document.getElementById("password").value
+        })
+      });
+
+      const data = await res.json();
+
+      document.getElementById("msg").innerText = data.message;
+
+      if (res.ok) {
+        location.href = "/login.html";
+      }
+    }
+  </script>
+
+</body>
+</html>
